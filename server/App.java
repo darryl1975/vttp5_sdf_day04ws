@@ -57,6 +57,8 @@ public class App {
 
             // day 04 - slide 9
             while (!messageReceived.toLowerCase().equals("quit")) {
+                System.out.println("Waiting for client input...");
+                
                 messageReceived = dis.readUTF(dis);
 
                 // pick a random cookie
