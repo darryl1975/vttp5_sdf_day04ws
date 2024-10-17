@@ -33,54 +33,19 @@ public class App {
             newDirectory.mkdir();
         }
 
-
-        // read and print cookies
-        Cookie c = new Cookie();
-        c.readCookieFile(dirPath + File.separator + fileName);
-        // c.printCookies();
-
         // day 04 - slide 8
         ServerSocket ss = new ServerSocket(Integer.parseInt(portNumber));
         Socket s = ss.accept();
         System.out.printf("\r\nWebsocket server started on port... %s\r\n", portNumber);
 
-        // day 04 - slide 9, 10
-        try {
-            InputStream is = s.getInputStream();
-            BufferedInputStream bis = new BufferedInputStream(is);
-            DataInputStream dis = new DataInputStream(bis);
-            String messageReceived = "";
+        // read and print cookies
+        // Cookie c = new Cookie(s);
+        // c.readCookieFile(dirPath + File.separator + fileName);
+        // c.printCookies();
 
-            OutputStream os = s.getOutputStream();
-            BufferedOutputStream bos = new BufferedOutputStream(os);
-            DataOutputStream dos = new DataOutputStream(bos);
+        Thread th = new Thread(new Cookie(s, dirPath + File.separator + fileName));
+        th.start();
 
-            // day 04 - slide 9
-            while (!messageReceived.toLowerCase().equals("quit")) {
-                System.out.println("Waiting for client input...");
-                
-                messageReceived = dis.readUTF(dis);
 
-                // pick a random cookie
-                String retrievedCookie = c.getRandomCookie();
-
-                // put it to the DataOutputStream to send back to client
-                dos.writeUTF(retrievedCookie);
-                dos.flush();
-            }
-
-            dos.close();
-            bos.close();
-            os.close();
-
-            dis.close();
-            bis.close();
-            is.close();
-
-        } catch (EOFException ex) {
-            System.err.println(ex.toString());
-        } finally {
-
-        }
     }
 }

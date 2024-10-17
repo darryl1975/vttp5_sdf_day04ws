@@ -21,10 +21,10 @@ public class ClientApp {
             System.err.println("Invalid arguments input");
         }
 
-        // day 04 - slide 08, 09
-        try {
-            Socket s = new Socket("localhost", Integer.parseInt(portNumber));
+        Socket s = new Socket("localhost", Integer.parseInt(portNumber));
 
+        // day 04 - slide 08, 09
+        try {            
             InputStream is = s.getInputStream();
             BufferedInputStream bis = new BufferedInputStream(is);
             DataInputStream dis = new DataInputStream(bis);
